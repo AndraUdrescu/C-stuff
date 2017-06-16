@@ -1,0 +1,129 @@
+(3 * 1) + 2 + 3 + 18 * (2 + 3)
+
+c {
+	x1 = null
+	op = null
+	x2 = null
+}
+/pass 1/ e1 si e2  - variabile o - operatie
+( <- begin nivel inferior
+e1 = 3
+o = *			graf  *
+e2 = 1 				/	\
+					3	1
+				
+salvam in c 
+
+c {
+	x1 = 3
+	op = *
+	x2 = 1
+}
+
+/pas 2/
+
+e1 = ) // nivel inferior end deci se ia c->op	  
+o = +						  +
+e2 = 2						/	\
+	inlocuim cu C	->	   )	 2	=>	+
+									  /	  \
+									 op    2
+									/  \
+								   e1   e2
+
+c {
+	x1 = op // *
+	op = +
+	x2 = 2
+}
+
+/pas 3/									  +
+e1 = c->op //+							/	\
+o = +						 			+	 3
+e2 = 3								  /	  \
+									  *    2
+									/  \
+								   3    2
+c {
+	x1 = op // +
+	op = +
+	x2 = 3
+}
+/pas 4/
+e1 = c->op // +
+e2 = +
+e3 = 18
+											+
+										  /	  \
+										  +	  18
+										/	\
+							 			+	 3
+									  /	  \
+									  *    2
+									/  \
+								   3    2
+c {
+	x1 = op // +
+	op = +
+	x2 = 18
+}
+/pas 5/
+e1= c->op // +
+o = *
+e2 = (
+
+e1 == + sau - si op == * sau /
+
+construim un arbore
+			*
+		   / \
+		  18  (
+
+iar lui c->op in partea stanga sa ii vom pun sa pointeze spre * si nu spre 18 
+c->x2 = o;
+
+
+e1 = x
+o = *
+e2 = (
+
+
+											+
+										  /	  \
+										/	   *
+									   +	  /	\
+									 /	 \	18  (
+									+	 3
+								  /	  \
+								  *    2
+								/  \
+							   3    2
+							 			
+c {
+	x1 = x
+	op = o
+	x2 = ( // operatie interioara so trebuie calculata dat fiind ca e recursie o sa-ti intre in ea sa o calculeze dupa care returneaza rezultatul nu ???
+}
+			=>> 
+e1 = 2
+o = +
+e2 = 3
+
+	    +
+	   / \
+	  2   3
+// inlocuim elem din c->x2 cu o
+c->x2 = 0
+											+ 
+										  /	  \
+										/	   *
+									   +	  /	\
+									 /	 \	18   +
+									+	 3     	/ \
+								  /	  \			2  3
+								  *    2
+								/  \
+							   3    2	
+
+
+la faza de mai sus cand intra in adancime se poate sa ai mai multe operati si s-ar putea sa ajungi sa suprascrii elem din c de aia cred ca ai nevoie de o stiva unde sa ai mai multe c-uri si sa lucrezi cu cel din capul stivei si elimin c-ul cand iesi din adancime gen ) daca dupa el nu gasim operator (nu mai avem nevoie de el) ... cred ca e bun acuma panamea
